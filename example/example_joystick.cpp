@@ -45,10 +45,17 @@ void Custom::UDPSend()
 void Custom::RobotControl() 
 {
     motiontime++;
+    
+    // get state from UDP
     udp.GetRecv(state);
 
+    // copy state to key data
+    // key data is in format xRockerBtnDataStruct in joystick.h
+    // note: that is 40 bytes of data, the last 16 bytes are unused
     memcpy(&_keyData, &state.wirelessRemote[0], 40);
 
+
+    // TODO: see if this prints
     if((int)_keyData.btn.components.A == 1){
         std::cout << "The key A is pressed, and the value of lx is " << _keyData.lx << std::endl;
     }
